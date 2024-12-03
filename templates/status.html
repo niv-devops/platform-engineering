@@ -1,0 +1,55 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h2>Status of Namespace: {{ namespace if namespace else 'Select a Namespace' }}</h2>
+
+<form method="POST" action="{{ url_for('check_status') }}">
+    <label for="namespace">Select Namespace:</label>
+    <select id="namespace" name="namespace">
+        <option value="">--Select a Namespace--</option>
+        {% for ns in namespaces %}
+        <option value="{{ ns }}" {% if ns == namespace %}selected{% endif %}>{{ ns }}</option>
+        {% endfor %}
+    </select>
+    <button type="submit">Check Status</button>
+</form>
+
+{% if namespace %}
+<h3>Pods</h3>
+<ul>
+    {% for pod in pods %}
+    <li>
+        <strong>{{ pod.name }}</strong>: {{ pod.status }}<br>
+        Images: {{ pod.images | join(", ") }}
+    </li>
+    {% endfor %}
+</ul>
+
+<h3>Deployments</h3>
+<ul>
+    {% for deployment in deployments %}
+    <li>
+        <strong>{{ deployment.name }}</strong>: 
+        Replicas: {{ deployment.replicas or 0 }},
+        Ready: {{ deployment.ready_replicas or 0 }}
+    </li>
+    {% endfor %}
+</ul>
+
+<h3>Services</h3>
+<ul>
+    {% for service in services %}
+    <li>
+        <strong>{{ service.name }}</strong>: Type: {{ service.type }}<br>
+        Ports: 
+        {% for port in service.ports %}
+            {{ port.port }} ({{ port.protocol }})
+            {% if service.type == 'NodePort' and port.nodePort %}
+                [NodePort: {{ port.nodePort }}]
+            {% endif %}
+        {% endfor %}
+    </li>
+    {% endfor %}
+</ul>
+{% endif %}
+{% endblock %}

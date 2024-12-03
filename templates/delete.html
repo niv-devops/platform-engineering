@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h2>Delete Environment</h2>
+<form method="post">
+    <label for="namespace">Select Namespace:</label>
+    <select id="namespace" name="namespace" required>
+        {% for ns in namespaces %}
+        <option value="{{ ns }}">{{ ns }}</option>
+        {% endfor %}
+    </select>
+    <button type="submit">Delete</button>
+</form>
+{% endblock %}

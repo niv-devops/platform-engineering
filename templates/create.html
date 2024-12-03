@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h2>Create Environment</h2>
+<form method="post">
+    <label for="namespace">Namespace:</label>
+    <input type="text" id="namespace" name="namespace" required>
+    <button type="submit">Create</button>
+</form>
+{% endblock %}
