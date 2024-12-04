@@ -1,0 +1,11 @@
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: platform-cluster-role
+rules:
+  - apiGroups: [""]
+    resources: ["pods", "services", "namespaces"]
+    verbs: ["get", "list", "create", "delete"]
+  - apiGroups: ["apps"]
+    resources: ["deployments"]
+    verbs: ["get", "list", "create", "delete"]

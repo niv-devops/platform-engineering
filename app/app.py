@@ -4,7 +4,8 @@ from kubernetes import client, config
 app = Flask(__name__)
 app.secret_key = 'supersecretkey'
 
-config.load_kube_config()
+#config.load_kube_config()
+config.load_incluster_config()
 
 @app.route('/')
 def home():

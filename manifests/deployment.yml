@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: platform
+  labels:
+    app: platform
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: platform
+  template:
+    metadata:
+      labels:
+        app: platform
+    spec:
+      serviceAccountName: platform-service-account
+      containers:
+      - name: platform
+        image: devopsgoofy/k8s-platform:latest
+        ports:
+        - containerPort: 5000
